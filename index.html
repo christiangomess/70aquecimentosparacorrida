@@ -7,11 +7,14 @@
     <title>70 Aquecimentos Para Corrida</title>
     <script>
         (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const hasUtmSource = urlParams.has('utm_source');
+            var urlParams = new URLSearchParams(window.location.search);
+            var hasUtmSource = urlParams.has('utm_source');
             
-            if (!hasUtmSource) {
-                document.body.classList.add('utm-restricted');
+            if (hasUtmSource) {
+                console.log("Modo liberado: utm_source detectado");
+            } else {
+                console.log("Modo bloqueado: sem utm_source");
+                document.documentElement.classList.add('utm-blocked');
             }
         })();
     </script>
@@ -45,15 +48,27 @@
             padding-top: 44px;
         }
 
-        body.utm-restricted .promo-bar,
-        body.utm-restricted main,
-        body.utm-restricted footer,
-        body.utm-restricted #exit-popup {
+        html.utm-blocked body > *:not(.hero-section),
+        html.utm-blocked .promo-bar,
+        html.utm-blocked main,
+        html.utm-blocked footer,
+        html.utm-blocked #exit-popup,
+        html.utm-blocked .exit-popup-overlay {
             display: none !important;
         }
 
-        body.utm-restricted .hero-section {
+        html.utm-blocked .hero-section {
             display: flex !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 32px 20px 40px !important;
+        }
+
+        @media (min-width: 768px) {
+            html.utm-blocked .hero-section {
+                padding: 48px 20px 56px !important;
+            }
         }
 
         /* BARRA SUPERIOR FIXA */
