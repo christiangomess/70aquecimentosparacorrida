@@ -2325,9 +2325,12 @@
             
             const sessionKey = 'exitPopupShown';
             let hasShown = sessionStorage.getItem(sessionKey) === 'true';
+            let popupActive = false;
+            let isGoingBack = false;
             
             function showPopup() {
-                if (hasShown) return;
+                if (hasShown || popupActive) return;
+                popupActive = true;
                 hasShown = true;
                 sessionStorage.setItem(sessionKey, 'true');
                 popup.style.display = 'flex';
@@ -2337,9 +2340,14 @@
             }
             
             function hidePopup() {
+                popupActive = false;
                 popup.classList.remove('active');
                 setTimeout(() => {
                     popup.style.display = 'none';
+                    if (isGoingBack) {
+                        isGoingBack = false;
+                        window.history.back();
+                    }
                 }, 400);
             }
             
@@ -2355,26 +2363,25 @@
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             
             if (isMobile) {
-                let inactivityTimer;
-                const inactivityTime = 8000;
-                
-                function resetInactivityTimer() {
-                    clearTimeout(inactivityTimer);
-                    inactivityTimer = setTimeout(showPopup, inactivityTime);
-                }
-                
-                document.addEventListener('touchstart', resetInactivityTimer);
-                document.addEventListener('touchmove', resetInactivityTimer);
-                document.addEventListener('touchend', resetInactivityTimer);
-                document.addEventListener('click', resetInactivityTimer);
-                document.addEventListener('scroll', resetInactivityTimer);
-                resetInactivityTimer();
-                
-                document.addEventListener('visibilitychange', function() {
-                    if (document.hidden && !hasShown) {
-                        setTimeout(showPopup, 1000);
+                window.addEventListener('popstate', function(e) {
+                    if (!hasShown && !popupActive) {
+                        e.preventDefault();
+                        isGoingBack = true;
+                        showPopup();
+                        history.pushState(null, null, window.location.href);
                     }
                 });
+                
+                document.addEventListener('click', function(e) {
+                    const link = e.target.closest('a');
+                    if (link && link.href && !link.href.startsWith(window.location.origin + window.location.pathname) && !link.href.startsWith('#')) {
+                        if (!hasShown) {
+                            e.preventDefault();
+                            isGoingBack = false;
+                            showPopup();
+                        }
+                    }
+                }, true);
             } else {
                 let mouseLeft = false;
                 
