@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>70 Aquecimentos Para Corrida</title>
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasUtmSource = urlParams.has('utm_source');
+            
+            if (!hasUtmSource) {
+                document.body.classList.add('utm-restricted');
+            }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style"
@@ -33,6 +43,17 @@
             flex-direction: column;
             min-height: 100vh;
             padding-top: 44px;
+        }
+
+        body.utm-restricted .promo-bar,
+        body.utm-restricted main,
+        body.utm-restricted footer,
+        body.utm-restricted #exit-popup {
+            display: none !important;
+        }
+
+        body.utm-restricted .hero-section {
+            display: flex !important;
         }
 
         /* BARRA SUPERIOR FIXA */
@@ -1765,7 +1786,7 @@
                         <span class="price-sub">pagamento único</span>
                     </div>
 
-                    <div class="price-savings">Você economiza R$30,00 + R$147,00 em bônus</div>
+                    <div class="price-savings">Você economiza R$30,00 + R$121,00 em bônus</div>
 
                     <div class="pricing-divider"></div>
 
@@ -2065,10 +2086,317 @@
     </main>
 
     <!-- 5. RODAPÉ (FOOTER) -->
-    <footer class="footer">
+    <footer class="footer" id="footer-content">
         <div class="footer-text">© 2026 Greg Rocha. Todos os direitos reservados.</div>
         <div class="footer-text">Material licenciado para uso profissional para aquecimentos de corrida.</div>
     </footer>
+
+    <!-- Popup de Saída (Exit Intent) -->
+    <div id="exit-popup" class="exit-popup-overlay" style="display: none;">
+        <div class="exit-popup-container">
+            <button class="exit-popup-close" aria-label="Fechar">&times;</button>
+            
+            <div class="exit-popup-badge">
+                <span class="exit-popup-icon">🎉</span>
+                <span>OFERTA ESPECIAL</span>
+            </div>
+            
+            <h2 class="exit-popup-title">Espera! Não saia ainda 👇</h2>
+            <p class="exit-popup-subtitle">Liberei uma condição especial para você garantir pelo menor preço hoje.</p>
+            
+            <div class="exit-popup-card">
+                <h3 class="exit-popup-card-title">Acesso Completo com Desconto</h3>
+                <p class="exit-popup-card-desc">70 aquecimentos + bônus exclusivos</p>
+                <div class="exit-popup-prices">
+                    <span class="exit-popup-old-price">De R$17,00</span>
+                    <span class="exit-popup-new-price">R$8,90</span>
+                </div>
+            </div>
+            
+            <a href="https://pay.wiapy.com/kGrLon4GeM" class="exit-popup-btn" target="_blank" rel="noopener noreferrer">
+                QUERO APROVEITAR AGORA
+            </a>
+            
+            <button class="exit-popup-btn-secondary">
+                Não, quero continuar pagando mais caro
+            </button>
+        </div>
+    </div>
+
+    <style>
+        .exit-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .exit-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .exit-popup-overlay.active .exit-popup-container {
+            transform: translateY(0);
+        }
+
+        .exit-popup-container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            text-align: center;
+        }
+
+        .exit-popup-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #9CA3AF;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 8px;
+            transition: color 0.2s ease;
+        }
+
+        .exit-popup-close:hover {
+            color: #4B5563;
+        }
+
+        .exit-popup-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(90deg, #22C55E 0%, #167F3D 100%);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .exit-popup-icon {
+            font-size: 14px;
+        }
+
+        .exit-popup-title {
+            font-weight: 800;
+            font-size: 22px;
+            color: #111827;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .exit-popup-subtitle {
+            font-size: 14px;
+            color: #4B5563;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .exit-popup-card {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            border: 2px solid #22C55E;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .exit-popup-card-title {
+            font-weight: 800;
+            font-size: 16px;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+
+        .exit-popup-card-desc {
+            font-size: 13px;
+            color: #4B5563;
+            margin-bottom: 12px;
+        }
+
+        .exit-popup-prices {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .exit-popup-old-price {
+            font-size: 14px;
+            color: #EF4444;
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+
+        .exit-popup-new-price {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #22C55E, #167F3D);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .exit-popup-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(180deg, #22C55E 0%, #167F3D 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .exit-popup-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
+        }
+
+        .exit-popup-btn-secondary {
+            background: none;
+            border: none;
+            color: #9CA3AF;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .exit-popup-btn-secondary:hover {
+            color: #6B7280;
+        }
+
+        @media (max-width: 480px) {
+            .exit-popup-container {
+                padding: 28px 20px;
+            }
+            
+            .exit-popup-title {
+                font-size: 20px;
+            }
+            
+            .exit-popup-btn {
+                font-size: 14px;
+                padding: 14px 20px;
+            }
+            
+            .exit-popup-new-price {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script>
+        (function() {
+            const popup = document.getElementById('exit-popup');
+            const closeBtn = popup.querySelector('.exit-popup-close');
+            const secondaryBtn = popup.querySelector('.exit-popup-btn-secondary');
+            const mainBtn = popup.querySelector('.exit-popup-btn');
+            
+            const sessionKey = 'exitPopupShown';
+            let hasShown = sessionStorage.getItem(sessionKey) === 'true';
+            
+            function showPopup() {
+                if (hasShown) return;
+                hasShown = true;
+                sessionStorage.setItem(sessionKey, 'true');
+                popup.style.display = 'flex';
+                setTimeout(() => {
+                    popup.classList.add('active');
+                }, 10);
+            }
+            
+            function hidePopup() {
+                popup.classList.remove('active');
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, 400);
+            }
+            
+            closeBtn.addEventListener('click', hidePopup);
+            secondaryBtn.addEventListener('click', hidePopup);
+            
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                    hidePopup();
+                }
+            });
+            
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                let inactivityTimer;
+                const inactivityTime = 8000;
+                
+                function resetInactivityTimer() {
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(showPopup, inactivityTime);
+                }
+                
+                document.addEventListener('touchstart', resetInactivityTimer);
+                document.addEventListener('touchmove', resetInactivityTimer);
+                document.addEventListener('touchend', resetInactivityTimer);
+                document.addEventListener('click', resetInactivityTimer);
+                document.addEventListener('scroll', resetInactivityTimer);
+                resetInactivityTimer();
+                
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden && !hasShown) {
+                        setTimeout(showPopup, 1000);
+                    }
+                });
+            } else {
+                let mouseLeft = false;
+                
+                document.addEventListener('mouseleave', function(e) {
+                    if (e.clientY <= 0 && !mouseLeft) {
+                        mouseLeft = true;
+                        showPopup();
+                    }
+                });
+                
+                document.addEventListener('mouseenter', function(e) {
+                    if (e.clientY > 0) {
+                        mouseLeft = false;
+                    }
+                });
+            }
+            
+            mainBtn.addEventListener('click', function() {
+                hidePopup();
+            });
+        })();
+    </script>
 
     <!-- Scripts da página -->
     <script>
@@ -2248,31 +2576,13 @@
             });
         }
 
-        // Executa ao carregar a página
+// Executa ao carregar a página
         document.addEventListener("DOMContentLoaded", () => {
             updatePromoDate();
             initFAQ();
             initCarousel();
         });
     </script>
-
-<script>
-  window.pixelId = "69deae513f867bb1533c4d15";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-    <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
-    
 </body>
 
 </html>
