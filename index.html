@@ -29,8 +29,6 @@
         body {
             background-color: #f5f5f5;
             color: #333;
-            /* Padding top to account for the sticky bar */
-            padding-top: 48px;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -177,38 +175,8 @@
             }
         }
 
-        /* 1. BARRA SUPERIOR FIXA (STICKY) */
-        .sticky-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #22C55E;
-            color: #ffffff;
-            text-align: center;
-            padding: 12px 20px;
-            font-weight: 600;
-            /* SemiBold */
-            font-size: 14px;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-            letter-spacing: 0.5px;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (min-width: 768px) {
-            .sticky-bar {
-                font-size: 16px;
-                padding: 14px 20px;
-            }
-
-            body {
-                padding-top: 52px;
-            }
-        }
+        
+        
 
         /* Mudo o main flex para expandir ocupando o centro da tela se houver poucas secoes */
         main {
@@ -1527,11 +1495,6 @@
 
 <body>
 
-    <!-- BARRA SUPERIOR FIXA (STICKY) -->
-    <div class="sticky-bar">
-        🕰️ PROMOÇÃO APENAS HOJE! (<span id="promo-date"></span>)
-    </div>
-
     <!-- HERO SECTION -->
     <section class="hero-section">
         <h1 class="hero-headline">
@@ -2063,17 +2026,6 @@
 
     <!-- Scripts da página -->
     <script>
-        function updatePromoDate() {
-            const dateElement = document.getElementById('promo-date');
-            if (dateElement) {
-                const today = new Date();
-                const dd = String(today.getDate()).padStart(2, '0');
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const yy = String(today.getFullYear()).slice(-2);
-                dateElement.textContent = `${dd}/${mm}/${yy}`;
-            }
-        }
-
         function initFAQ() {
             const faqItems = document.querySelectorAll('.faq-item');
 
@@ -2241,7 +2193,6 @@
 
         // Executa ao carregar a página
         document.addEventListener("DOMContentLoaded", () => {
-            updatePromoDate();
             initFAQ();
             initCarousel();
         });
