@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>70 Aquecimentos Para Corrida</title>
     <script>
-        (function() {
+        (function () {
+            var protocol = window.location.protocol;
+
+            if (protocol === 'file:') {
+                console.log("Modo local: acesso liberado");
+                return;
+            }
+
             var urlParams = new URLSearchParams(window.location.search);
             var hasUtmSource = urlParams.has('utm_source');
-            
+
             if (hasUtmSource) {
                 console.log("Modo liberado: utm_source detectado");
             } else {
@@ -48,7 +55,7 @@
             padding-top: 44px;
         }
 
-        html.utm-blocked body > *:not(.hero-section),
+        html.utm-blocked body>*:not(.hero-section),
         html.utm-blocked .promo-bar,
         html.utm-blocked main,
         html.utm-blocked footer,
@@ -251,8 +258,8 @@
             }
         }
 
-        
-        
+
+
 
         /* Mudo o main flex para expandir ocupando o centro da tela se houver poucas secoes */
         main {
@@ -539,24 +546,90 @@
             text-align: center;
             margin-bottom: 32px;
             line-height: 1.3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bonus-section-title span {
+            font-weight: 800;
+            font-size: 20px;
         }
 
         .bonus-container {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 16px;
             width: 100%;
-            max-width: 900px;
-            overflow-x: auto;
-            padding-bottom: 20px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            /* Hide scrollbar */
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
-        .bonus-container::-webkit-scrollbar {
-            display: none;
+        .bonus-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .bonus-row-center {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 80%;
+            max-width: 280px;
+        }
+
+        .bonus-card {
+            width: 100%;
+            min-width: 0;
+        }
+
+        @media (max-width: 479px) {
+            .bonus-card {
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .bonus-img {
+                max-height: 60px;
+                margin-bottom: 6px;
+            }
+
+            .bonus-card-title {
+                font-size: 11px;
+                line-height: 1.2;
+                margin-bottom: 4px;
+                min-height: 26px;
+            }
+
+            .bonus-price {
+                flex-direction: column;
+                gap: 2px;
+                margin-top: 4px;
+            }
+
+            .bonus-old-price {
+                font-size: 10px;
+            }
+
+            .bonus-free {
+                font-size: 12px;
+            }
+        }
+
+        @media (min-width: 480px) {
+            .bonus-container {
+                max-width: 440px;
+            }
+
+            .bonus-row-center {
+                max-width: 320px;
+            }
         }
 
         @media (min-width: 768px) {
@@ -565,10 +638,17 @@
             }
 
             .bonus-container {
-                justify-content: center;
-                gap: 24px;
-                overflow-x: visible;
-                padding-bottom: 0;
+                max-width: 900px;
+            }
+
+            .bonus-row {
+                gap: 20px;
+            }
+
+            .bonus-row-center {
+                gap: 20px;
+                width: 66%;
+                max-width: 340px;
             }
         }
 
@@ -581,23 +661,11 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            flex: 0 0 calc(85% - 16px);
-            scroll-snap-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s ease;
         }
 
-        @media (min-width: 480px) {
-            .bonus-card {
-                flex: 0 0 calc(50% - 16px);
-            }
-        }
-
         @media (min-width: 768px) {
-            .bonus-card {
-                flex: 1 1 0;
-            }
-
             .bonus-card:hover {
                 transform: translateY(-4px);
             }
@@ -606,7 +674,7 @@
         .bonus-img {
             width: 100%;
             height: auto;
-            max-height: 160px;
+            max-height: 140px;
             border-radius: 8px;
             object-fit: contain;
             margin-bottom: 8px;
@@ -614,7 +682,7 @@
         }
 
         .bonus-card-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: #333;
             margin-bottom: 6px;
@@ -990,6 +1058,35 @@
             text-align: center;
             margin-bottom: 24px;
             line-height: 1.3;
+        }
+
+        .testimonial-cta-wrapper {
+            margin-top: 24px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .testimonial-cta {
+            background: linear-gradient(180deg, #22C55E 0%, #167F3D 100%);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: 85%;
+            max-width: 360px;
+            text-align: center;
+        }
+
+        .testimonial-cta:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
         }
 
         @media (min-width: 768px) {
@@ -1396,176 +1493,6 @@
             padding-top: 4px;
             padding-bottom: 16px;
         }
-
-        /* SEÇÃO: POR QUE ESCOLHEM ESTE MATERIAL */
-        .why-choose-section {
-            background-color: #f9fafb;
-            padding: 48px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .why-choose-title {
-            color: #111827;
-            font-weight: 800;
-            font-size: 22px;
-            text-align: center;
-            margin-bottom: 16px;
-            line-height: 1.3;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        @media (min-width: 768px) {
-            .why-choose-section {
-                padding: 56px 20px;
-            }
-
-            .why-choose-title {
-                font-size: 28px;
-                margin-bottom: 20px;
-            }
-        }
-
-        .why-choose-line {
-            width: 60px;
-            height: 3px;
-            background-color: #22C55E;
-            margin-bottom: 32px;
-            border-radius: 2px;
-        }
-
-        @media (min-width: 768px) {
-            .why-choose-line {
-                margin-bottom: 40px;
-            }
-        }
-
-        .why-choose-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        @media (min-width: 768px) {
-            .why-choose-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
-                max-width: 1100px;
-            }
-        }
-
-        .why-choose-card {
-            background-color: #ffffff;
-            border-radius: 16px;
-            padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-
-        @media (min-width: 768px) {
-            .why-choose-card {
-                padding: 28px 20px;
-            }
-        }
-
-        .why-choose-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.18);
-            border-color: rgba(34, 197, 94, 0.2);
-        }
-
-        .why-choose-card:hover .card-icon-circle {
-            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.15);
-        }
-
-        .why-choose-card:hover .card-title {
-            color: #22C55E;
-        }
-
-        .card-icon-circle {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #22C55E 0%, #167F3D 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-icon-circle::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
-            border-radius: 50% 50% 0 0;
-        }
-
-        .card-icon-circle svg {
-            width: 26px;
-            height: 26px;
-            fill: none;
-            stroke: #ffffff;
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            position: relative;
-            z-index: 1;
-        }
-
-        .why-choose-card:hover .card-icon-circle {
-            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.4);
-            transform: scale(1.05);
-        }
-
-        .why-choose-card:hover .card-icon-circle::before {
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, transparent 100%);
-        }
-
-        .card-title {
-            color: #1f2937;
-            font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 8px;
-            line-height: 1.3;
-            transition: color 0.35s ease;
-        }
-
-        @media (min-width: 768px) {
-            .card-title {
-                font-size: 16px;
-            }
-        }
-
-        .card-description {
-            color: #6b7280;
-            font-size: 13px;
-            line-height: 1.4;
-            font-weight: 400;
-        }
-
-        @media (min-width: 768px) {
-            .card-description {
-                font-size: 14px;
-            }
-        }
     </style>
 </head>
 
@@ -1580,16 +1507,15 @@
     <!-- HERO SECTION -->
     <section class="hero-section">
         <h1 class="hero-headline">
-            <span class="highlight">70 AQUECIMENTOS PRONTOS</span> PRA REDUZIR O CANSAÇO E CORRER MELHOR + BÔNUS
+            <span class="highlight">70 AQUECIMENTOS PRONTAS</span> PARA CORRER MAIS TEMPO SEM CANSAR + BÔNUS
         </h1>
         <p class="hero-subheadline">
-            Prepare seu corpo antes de correr com aquecimentos simples, e reduza o cansaço correndo por mais tempo mesmo
-            começando do zero.
+            Faça por aquecimentos simples antes de correr, e corra por mais tempo sem cansar rápido!
         </p>
         <img src="mockup3d.webp" alt="Mockup do Produto" class="hero-mockup" width="340" height="auto"
             fetchpriority="high">
-        <p class="hero-proof">🔥 +1.487 pessoas já começaram a correr melhor com esse método</p>
-        <a href="#precos" class="hero-cta">QUERO AGORA</a>
+        <p class="hero-proof">🔥 +2.787 pessoas aprovaram pelos aquecimentos</p>
+        <a href="#precos" class="hero-cta">QUERO COMEÇAR AGORA</a>
         <div class="hero-benefits">
             <div class="hero-benefit-item">
                 <svg viewBox="0 0 24 24">
@@ -1614,65 +1540,6 @@
     </section>
 
     <main>
-        <!-- SEÇÃO: POR QUE ESCOLHEM ESTE MATERIAL -->
-        <section class="why-choose-section">
-            <h2 class="why-choose-title">POR QUE ESCOLHEM ESTE MATERIAL?</h2>
-            <div class="why-choose-line"></div>
-
-            <div class="why-choose-grid">
-                <!-- CARD 1 -->
-                <div class="why-choose-card">
-                    <div class="card-icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Fácil de Aplicar</h3>
-                    <p class="card-description">Aquecimentos simples e práticos que qualquer iniciante consegue fazer
-                        antes da corrida, sem complicação.</p>
-                </div>
-
-                <!-- CARD 2 -->
-                <div class="why-choose-card">
-                    <div class="card-icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M9 11l3 3L22 4"></path>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Não Precisa Pensar</h3>
-                    <p class="card-description">Está tudo pronto para usar. É só escolher um aquecimento e aplicar antes
-                        de correr.</p>
-                </div>
-
-                <!-- CARD 3 -->
-                <div class="why-choose-card">
-                    <div class="card-icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Método Estruturado</h3>
-                    <p class="card-description">Os aquecimentos foram organizados do nível iniciante ao mais avançado,
-                        facilitando sua evolução.</p>
-                </div>
-
-                <!-- CARD 4 -->
-                <div class="why-choose-card">
-                    <div class="card-icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M23 6l-9.5 9.5-5-5L1 18"></path>
-                            <polyline points="17 6 23 6 23 12"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Progresso de Evolução</h3>
-                    <p class="card-description">Além do material principal, os bônus complementares ajudam você a
-                        evoluir ainda mais na corrida.</p>
-                </div>
-            </div>
-        </section>
-
         <!-- SEÇÃO: O QUE VOCÊ VAI RECEBER -->
         <section class="what-you-get-section">
             <h2 class="what-you-get-title">O QUE VOCÊ VAI RECEBER</h2>
@@ -1742,45 +1609,70 @@
 
         <!-- SEÇÃO: BÔNUS EXCLUSIVOS -->
         <section class="bonus-section">
-            <h2 class="bonus-section-title">🎁 Bônus Exclusivos (GRÁTIS HOJE)</h2>
+            <h2 class="bonus-section-title">🎁 BÔNUS EXCLUSIVOS<span>(GRÁTIS HOJE)</span></h2>
 
             <div class="bonus-container">
-                <!-- CARD 1 BÔNUS -->
-                <div class="bonus-card">
-                    <img src="bonus1.webp" alt="Bônus 1" class="bonus-img" width="160" height="120" loading="lazy"
-                        decoding="async">
-                    <h3 class="bonus-card-title">50 Exercícios Simples Para Melhorar o Fôlego</h3>
-                    <div class="bonus-price">
-                        <span class="bonus-old-price">De R$47</span>
-                        <span class="bonus-free">GRÁTIS</span>
+                <div class="bonus-row">
+                    <!-- CARD 1 BÔNUS -->
+                    <div class="bonus-card">
+                        <img src="bonus1.webp" alt="Bônus 1" class="bonus-img" width="160" height="120" loading="lazy"
+                            decoding="async">
+                        <h3 class="bonus-card-title">50 Exercícios Simples Para Melhorar o Fôlego</h3>
+                        <div class="bonus-price">
+                            <span class="bonus-old-price">De R$47</span>
+                            <span class="bonus-free">GRÁTIS</span>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2 BÔNUS -->
+                    <div class="bonus-card">
+                        <img src="bonus2.webp" alt="Bônus 2" class="bonus-img" width="160" height="120" loading="lazy"
+                            decoding="async">
+                        <h3 class="bonus-card-title">50 Exercícios de Ativação Muscular Para Força e Estabilidade</h3>
+                        <div class="bonus-price">
+                            <span class="bonus-old-price">De R$47</span>
+                            <span class="bonus-free">GRÁTIS</span>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3 BÔNUS -->
+                    <div class="bonus-card">
+                        <img src="bonus3.webp" alt="Bônus 3" class="bonus-img" width="160" height="120" loading="lazy"
+                            decoding="async">
+                        <h3 class="bonus-card-title">30 Exercícios de Mobilidade Para Correr Mais Solto</h3>
+                        <div class="bonus-price">
+                            <span class="bonus-old-price">De R$47</span>
+                            <span class="bonus-free">GRÁTIS</span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- CARD 2 BÔNUS -->
-                <div class="bonus-card">
-                    <img src="bonus2.webp" alt="Bônus 2" class="bonus-img" width="160" height="120" loading="lazy"
-                        decoding="async">
-                    <h3 class="bonus-card-title">Plano Simples Do Zero Aos 5KM (Sem Parar)</h3>
-                    <div class="bonus-price">
-                        <span class="bonus-old-price">De R$47</span>
-                        <span class="bonus-free">GRÁTIS</span>
+                <div class="bonus-row bonus-row-center">
+                    <!-- CARD 4 BÔNUS -->
+                    <div class="bonus-card">
+                        <img src="bonus4.webp" alt="Bônus 4" class="bonus-img" width="160" height="120" loading="lazy"
+                            decoding="async">
+                        <h3 class="bonus-card-title">Plano Simples Do Zero Aos 5KM (Sem Parar)</h3>
+                        <div class="bonus-price">
+                            <span class="bonus-old-price">De R$47</span>
+                            <span class="bonus-free">GRÁTIS</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- CARD 3 BÔNUS -->
-                <div class="bonus-card">
-                    <img src="bonus3.webp" alt="Bônus 3" class="bonus-img" width="160" height="120" loading="lazy"
-                        decoding="async">
-                    <h3 class="bonus-card-title">Certificado De Reconhecimento</h3>
-                    <div class="bonus-price">
-                        <span class="bonus-old-price">De R$53</span>
-                        <span class="bonus-free">GRÁTIS</span>
+                    <!-- CARD 5 BÔNUS -->
+                    <div class="bonus-card">
+                        <img src="bonus5.webp" alt="Bônus 5" class="bonus-img" width="160" height="120" loading="lazy"
+                            decoding="async">
+                        <h3 class="bonus-card-title">Certificado De Reconhecimento Em Pdf Pronto Para Imprimir</h3>
+                        <div class="bonus-price">
+                            <span class="bonus-old-price">De R$53</span>
+                            <span class="bonus-free">GRÁTIS</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="bonus-total-block">
-                💚 Total dos bônus: <span class="strike">R$147</span> → <strong>GRÁTIS HOJE!</strong>
+                💚 Total dos bônus: <span class="strike">R$247</span> → <strong>GRÁTIS HOJE!</strong>
             </div>
         </section>
 
@@ -1801,7 +1693,7 @@
                         <span class="price-sub">pagamento único</span>
                     </div>
 
-                    <div class="price-savings">Você economiza R$30,00 + R$147,00 em bônus</div>
+                    <div class="price-savings">Você economiza R$30,00 + R$247,00 em bônus</div>
 
                     <div class="pricing-divider"></div>
 
@@ -1836,6 +1728,10 @@
                     <ul class="bonus-list">
                         <li><span class="gift-icon">🎁</span> BÔNUS: 50 Exercícios Simples Para Melhorar o Fôlego e
                             Cansar Menos ao Correr</li>
+                        <li><span class="gift-icon">🎁</span> BÔNUS: 50 EXERCÍCIOS DE ATIVAÇÃO MUSCULAR PARA FORÇA E
+                            ESTABILIDADE</li>
+                        <li><span class="gift-icon">🎁</span> BÔNUS: 30 EXERCÍCIOS DE MOBILIDADE PARA CORRER MAIS SOLTO
+                        </li>
                         <li><span class="gift-icon">🎁</span> BÔNUS: Plano Simples Do Zero Aos 5KM(Sem Parar)</li>
                         <li><span class="gift-icon">🎁</span> BÔNUS: Certificado De Reconhecimento</li>
                     </ul>
@@ -1910,7 +1806,7 @@
 
                     <div style="flex-grow: 1;"></div>
 
-                    <a href="https://pay.wiapy.com/KbFFqFIHU4" class="card-btn">QUERO ACESSO BÁSICO</a>
+                    <a href="https://pay.wiapy.com/v6EqK4Li55" class="card-btn">QUERO ACESSO BÁSICO</a>
                 </div>
 
             </div>
@@ -1939,6 +1835,22 @@
                             <img src="pv4.webp" alt="Prova Social 4" class="testimonial-img" width="340" height="200"
                                 loading="lazy" decoding="async">
                         </div>
+                        <div class="carousel-slide">
+                            <img src="pv5.webp" alt="Prova Social 5" class="testimonial-img" width="340" height="200"
+                                loading="lazy" decoding="async">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="pv6.webp" alt="Prova Social 6" class="testimonial-img" width="340" height="200"
+                                loading="lazy" decoding="async">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="pv7.webp" alt="Prova Social 7" class="testimonial-img" width="340" height="200"
+                                loading="lazy" decoding="async">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="pv8.webp" alt="Prova Social 8" class="testimonial-img" width="340" height="200"
+                                loading="lazy" decoding="async">
+                        </div>
                     </div>
                 </div>
 
@@ -1960,7 +1872,15 @@
                     <button class="dot" data-index="1" aria-label="Slide 2"></button>
                     <button class="dot" data-index="2" aria-label="Slide 3"></button>
                     <button class="dot" data-index="3" aria-label="Slide 4"></button>
+                    <button class="dot" data-index="4" aria-label="Slide 5"></button>
+                    <button class="dot" data-index="5" aria-label="Slide 6"></button>
+                    <button class="dot" data-index="6" aria-label="Slide 7"></button>
+                    <button class="dot" data-index="7" aria-label="Slide 8"></button>
                 </div>
+            </div>
+
+            <div class="testimonial-cta-wrapper">
+                <a href="#precos" class="testimonial-cta">QUERO COMEÇAR AGORA</a>
             </div>
         </section>
 
@@ -2110,15 +2030,15 @@
     <div id="exit-popup" class="exit-popup-overlay" style="display: none;">
         <div class="exit-popup-container">
             <button class="exit-popup-close" aria-label="Fechar">&times;</button>
-            
+
             <div class="exit-popup-badge">
                 <span class="exit-popup-icon">🎉</span>
                 <span>OFERTA ESPECIAL</span>
             </div>
-            
+
             <h2 class="exit-popup-title">Espera! Não saia ainda 👇</h2>
             <p class="exit-popup-subtitle">Liberei uma condição especial para você garantir pelo menor preço hoje.</p>
-            
+
             <div class="exit-popup-card">
                 <h3 class="exit-popup-card-title">Acesso Completo com Desconto</h3>
                 <p class="exit-popup-card-desc">70 aquecimentos + bônus exclusivos</p>
@@ -2127,11 +2047,11 @@
                     <span class="exit-popup-new-price">R$8,90</span>
                 </div>
             </div>
-            
+
             <a href="https://pay.wiapy.com/kGrLon4GeM" class="exit-popup-btn" target="_blank" rel="noopener noreferrer">
                 QUERO APROVEITAR AGORA
             </a>
-            
+
             <button class="exit-popup-btn-secondary">
                 Não, quero continuar pagando mais caro
             </button>
@@ -2315,16 +2235,16 @@
             .exit-popup-container {
                 padding: 28px 20px;
             }
-            
+
             .exit-popup-title {
                 font-size: 20px;
             }
-            
+
             .exit-popup-btn {
                 font-size: 14px;
                 padding: 14px 20px;
             }
-            
+
             .exit-popup-new-price {
                 font-size: 24px;
             }
@@ -2332,19 +2252,20 @@
     </style>
 
     <script>
-        (function() {
+        (function () {
             const popup = document.getElementById('exit-popup');
             const closeBtn = popup.querySelector('.exit-popup-close');
             const secondaryBtn = popup.querySelector('.exit-popup-btn-secondary');
             const mainBtn = popup.querySelector('.exit-popup-btn');
-            
+
             const sessionKey = 'exitPopupShown';
             let hasShown = sessionStorage.getItem(sessionKey) === 'true';
             let popupActive = false;
             let isGoingBack = false;
-            
+            let isInternalClick = false;
+
             function showPopup() {
-                if (hasShown || popupActive) return;
+                if (hasShown || popupActive || isInternalClick) return;
                 popupActive = true;
                 hasShown = true;
                 sessionStorage.setItem(sessionKey, 'true');
@@ -2353,7 +2274,7 @@
                     popup.classList.add('active');
                 }, 10);
             }
-            
+
             function hidePopup() {
                 popupActive = false;
                 popup.classList.remove('active');
@@ -2365,31 +2286,65 @@
                     }
                 }, 400);
             }
-            
+
+            function isInternalLink(element) {
+                if (!element) return false;
+                if (element.tagName === 'A') {
+                    const href = element.getAttribute('href');
+                    if (!href) return true;
+                    if (href.startsWith('#')) return true;
+                    if (href.startsWith(window.location.origin + window.location.pathname)) return true;
+                    if (href.startsWith('http') && href.includes(window.location.hostname)) return true;
+                }
+                return false;
+            }
+
+            function isInternalButton(element) {
+                if (!element) return false;
+                if (element.tagName === 'BUTTON' || element.tagName === 'A') {
+                    return element.classList.contains('cta-button') ||
+                        element.classList.contains('hero-cta') ||
+                        element.classList.contains('content-cta') ||
+                        element.classList.contains('card-btn') ||
+                        element.getAttribute('href')?.startsWith('#');
+                }
+                return false;
+            }
+
+            document.addEventListener('click', function (e) {
+                const target = e.target.closest('button, a');
+                if (target && (isInternalLink(target) || isInternalButton(target))) {
+                    isInternalClick = true;
+                    setTimeout(() => {
+                        isInternalClick = false;
+                    }, 3000);
+                }
+            }, true);
+
             closeBtn.addEventListener('click', hidePopup);
             secondaryBtn.addEventListener('click', hidePopup);
-            
-            popup.addEventListener('click', function(e) {
+
+            popup.addEventListener('click', function (e) {
                 if (e.target === popup) {
                     hidePopup();
                 }
             });
-            
+
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
+
             if (isMobile) {
-                window.addEventListener('popstate', function(e) {
-                    if (!hasShown && !popupActive) {
+                window.addEventListener('popstate', function (e) {
+                    if (!hasShown && !popupActive && !isInternalClick) {
                         e.preventDefault();
                         isGoingBack = true;
                         showPopup();
                         history.pushState(null, null, window.location.href);
                     }
                 });
-                
-                document.addEventListener('click', function(e) {
+
+                document.addEventListener('click', function (e) {
                     const link = e.target.closest('a');
-                    if (link && link.href && !link.href.startsWith(window.location.origin + window.location.pathname) && !link.href.startsWith('#')) {
+                    if (link && !isInternalLink(link)) {
                         if (!hasShown) {
                             e.preventDefault();
                             isGoingBack = false;
@@ -2399,22 +2354,24 @@
                 }, true);
             } else {
                 let mouseLeft = false;
-                
-                document.addEventListener('mouseleave', function(e) {
-                    if (e.clientY <= 0 && !mouseLeft) {
+
+                document.addEventListener('mouseleave', function (e) {
+                    if (e.clientY <= 0 && !mouseLeft && !popupActive) {
                         mouseLeft = true;
-                        showPopup();
+                        if (!isInternalClick) {
+                            showPopup();
+                        }
                     }
                 });
-                
-                document.addEventListener('mouseenter', function(e) {
+
+                document.addEventListener('mouseenter', function (e) {
                     if (e.clientY > 0) {
                         mouseLeft = false;
                     }
                 });
             }
-            
-            mainBtn.addEventListener('click', function() {
+
+            mainBtn.addEventListener('click', function () {
                 hidePopup();
             });
         })();
@@ -2598,31 +2555,13 @@
             });
         }
 
-// Executa ao carregar a página
+        // Executa ao carregar a página
         document.addEventListener("DOMContentLoaded", () => {
             updatePromoDate();
             initFAQ();
             initCarousel();
         });
     </script>
-
-<script>
-  window.pixelId = "69deae513f867bb1533c4d15";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-    <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
-    
 </body>
 
 </html>
