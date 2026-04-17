@@ -2275,14 +2275,23 @@
                 }, 10);
             }
 
-            function saveCheckoutReturn() {
-                localStorage.setItem('voltou_checkout', 'true');
+            function markCheckoutIntent() {
+                sessionStorage.setItem('checkout_saida', 'true');
             }
 
-            window.addEventListener('pageshow', function (event) {
-                if (localStorage.getItem('voltou_checkout') === 'true') {
-                    localStorage.removeItem('voltou_checkout');
-                    setTimeout(function () {
+            function markPageHidden() {
+                if (sessionStorage.getItem('checkout_saida') === 'true') {
+                    sessionStorage.setItem('checkout_saiu', 'true');
+                }
+            }
+
+            window.addEventListener('pagehide', markPageHidden);
+
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted || sessionStorage.getItem('checkout_saiu') === 'true') {
+                    sessionStorage.removeItem('checkout_saiu');
+                    sessionStorage.removeItem('checkout_saida');
+                    setTimeout(function() {
                         showPopup();
                     }, 1200);
                 }
@@ -2390,7 +2399,7 @@
 
             document.querySelectorAll('a.card-btn[href*="pay"], a.hero-cta[href*="pay"], a.content-cta[href*="pay"]').forEach(function (btn) {
                 btn.addEventListener('click', function () {
-                    saveCheckoutReturn();
+                    markCheckoutIntent();
                 });
             });
         })();
