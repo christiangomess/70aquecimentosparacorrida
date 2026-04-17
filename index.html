@@ -2275,6 +2275,19 @@
                 }, 10);
             }
 
+            function saveCheckoutReturn() {
+                localStorage.setItem('voltou_checkout', 'true');
+            }
+
+            window.addEventListener('pageshow', function (event) {
+                if (localStorage.getItem('voltou_checkout') === 'true') {
+                    localStorage.removeItem('voltou_checkout');
+                    setTimeout(function () {
+                        showPopup();
+                    }, 1200);
+                }
+            });
+
             function hidePopup() {
                 popupActive = false;
                 popup.classList.remove('active');
@@ -2373,6 +2386,12 @@
 
             mainBtn.addEventListener('click', function () {
                 hidePopup();
+            });
+
+            document.querySelectorAll('a.card-btn[href*="pay"], a.hero-cta[href*="pay"], a.content-cta[href*="pay"]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    saveCheckoutReturn();
+                });
             });
         })();
     </script>
@@ -2562,24 +2581,6 @@
             initCarousel();
         });
     </script>
-
-<script>
-  window.pixelId = "69deae513f867bb1533c4d15";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-    <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
-    
 </body>
 
 </html>
